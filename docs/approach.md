@@ -129,3 +129,13 @@ MVP established `10bb134`
 I'm going to skip this iteration as I'm running on a time limit and want to fulfill Functionality and Usability while hopefully retaining Simplicity (at the expense of focus on Application design)
 
 ### CLI Runner and Parser
+
+Milestone achieved `51ce3e08473e34fea81c47594a754458ba6d1bba`
+
+Took a lot longer than expected, but I'm pretty happy with the end result. See the above commit message for more. 
+
+Note this is a big commit that doesn't include full test coverage: I've pretty much exhausted my time limit, so will wrap things up.
+
+My last feature work will be refactoring Calculator presentation, then I'll close out my submission.
+
+### CLI Presentation

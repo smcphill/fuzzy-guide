@@ -63,21 +63,20 @@ bundle install
 
 ### Usage
 
-Toplevel help is minimal. More detail is provided by calculator-specific help
-
 ```bash
 ./bin/ferociacalc -h
-Usage: ferociacalc -c term_deposit [options; -h for help]
-    -c, --calculator CALCULATOR      Required CALCULATOR to use (currently, only `term_deposit` is available)
-./bin/ferociacalc -c term_deposit -h
-...
+Usage: ferociacalc [options]
+    -d, --initial_deposit DOLLARS    Required Initial deposit amount in dollars ($1_000.00 - $1_500_000.00)
+    -i, --interest_rate PERCENT      Required Interest rate % p.a (0-15; e.g. 3% is 3, not 0.03)
+    -t, --deposit_term MONTHS        Required Deposit term in months (3-60; e.g. 12)
+    -p PERIOD < monthly | quarterly | annually | maturity >,
+        --interest_frequency         Required Interest payment period (e.g. monthly)
 ```
 
 Illustrative output:
 
 ```bash
 ./bin/ferociacalc \
-  -c term_deposit \
   -d 10000 \
   -i 1.1 \
   -t 36 \
@@ -96,11 +95,14 @@ bundle exec rspec -f d
 Integration tests can be run specifically:
 
 ```bash
-bundle exec rspec -f d ./spec/term_deposit_integration_spec.rb
+bundle exec rspec -f d ./spec/ferociacalc_integration_test_spec.rb
 ```
 
 ### Other documents
 
-- The [approach](./docs/approach.md)
+- The planned [approach](./docs/approach.md) and a log of realised progress
 - The (evolving) [application design](./docs/north_star.md)
-- Developer [notes](./docs/observations.md) I've made during the exercise
+
+### Final thoughts
+
+Some final thoughts to be committed at the end of work
