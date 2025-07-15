@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'mvp'
-
 describe "ferocioacalc integration tests" do
   it 'calculates correctly' do
     banner = "Usage: ferociacalc <initial> <rate_pa> <term_in_months> <compounding_frequency_per_year>\n"
