@@ -75,3 +75,47 @@ This is the anticipated functionally complete milestone.
 ### Review implementation and design
 
 An opportunity to review the implementation and consider any adjustments / improvements
+
+
+## Log
+
+
+### Review requirements
+
+#### Authoritative sources (and how to use them)
+
+Quick investigation of the online calculator shows:
+
+- it has some features (i.e. income stream) we don't require
+- it rounds up to the nearest whole dollar
+- it imposes some minimal and maximal bounds (i.e. deposit $1_000 - $1_500_000; interest rate 0% - 15%; deposit term 1 - 5 years; payment frequency is a controlled vocab / enum)
+
+
+#### Functional requirements
+
+Calculator inputs are domain objects: we can benefit from modelling their characteristics:
+
+- inputs have a type (e.g. **dollar** amount, **time-based** frequency)
+- inputs have bounds (e.g. deposit $1_000 - $1_500_000, interest 0% - 15%)
+- payment frequency has many options, but they can all be represented by months (i.e. quarterly = 3 months; annually = 12)
+
+#### Non-functional requirements
+
+CLI seems the most straightforward way to go, and can eawsily meet Usability and Feedback concerns.
+
+### Application design
+
+Initial thoughts dumped into [North Star](north_star.md)
+
+
+#### Initial thoughts on domain concerns
+
+- **User Input** represents the arguments to run a calculation
+- **Parser** can parse User Input into domain objects (defined inputs and a Calculator), and provide Feedback on invalid User Input
+- **Calculator** uses defined inputs to perform the calculation and generate a **Result**
+- **Presenter** knows how to present a Calculator Result
+- **Runner** parses User Input using its Parser to call a Calculator, then presents the Result using a Presenter
+
+### MVP
+
+...
