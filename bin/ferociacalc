@@ -11,7 +11,8 @@ $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 require 'mvp'
 
 begin
-  MVP.new.call
+  puts 'Usage: ferociacalc <initial> <rate_pa> <term_in_months> <compounding_frequency_per_year>'
+  puts MVP.new.call(ARGV)
 rescue StandardError => e
   puts e.message
 end
