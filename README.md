@@ -105,4 +105,23 @@ bundle exec rspec -f d ./spec/ferociacalc_integration_test_spec.rb
 
 ### Final thoughts
 
-Some final thoughts to be committed at the end of work
+Some final thoughts to be committed at the end of work.
+
+I've gone over my allotted time by ~30 minutes, and all told it's been a very enjoyable and novel experience as I haven't been given a "do this and get back once it's done" task for many years, but it feels good recalling how to do the thing...
+
+There's a lot of refactoring to be done:
+
+- Calculator inputs are probably their own class of domain object: there's a lot of functionality stuffed into those hashes
+  - there's good test coverage so refactoring can be done with confidence
+- CLI is parser, runner and presenter. Definitely overloaded
+  - there's _not_ good test coverage here, but the runner is covered and the presenter is covered by the integration test (option parsing is done by optparse so maybe lack of coverage isn't so bad... hmm)
+
+(These are areas I got to late, and the result isn't always mature)
+
+OptionParser / optarse is a bit unwieldy but it has nice type coercion, and hooks for decent feedback.
+
+All told, I'm reasonably happy with Functionality, Usability, Feedback, and Application Design.
+
+There are definitely some non-Simplistic and non-Fluent aspects to parts of my submission. Testing is good in some areas, absent in others (where there is a lack of Simplicity).
+
+I'm out of practice employing Good habits, but the muscle memory is returning.
