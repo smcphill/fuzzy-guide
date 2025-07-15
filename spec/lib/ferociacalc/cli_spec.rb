@@ -4,18 +4,18 @@ require 'ferociacalc/cli'
 
 describe Ferociacalc::CLI do
   describe '#calculate' do
-    let(:args) { %w[1000 3.5 12 12].freeze }
+    let(:args) { %w[-d 1000 -i 3.5 -t 12 -p monthly].freeze }
     let(:expected_inputs) do
       {
         initial_deposit: 1000.0,
-        interest_rate: 3.5,
-        deposit_term: 12,
+        interest_rate: 0.035,
+        deposit_term: 1,
         interest_frequency: 12
       }
     end
 
     it 'calls calculator with expected arguments' do
-      calculator = instance_double(Ferociacalc::TermDepositCalculator)
+      calculator = Ferociacalc::TermDepositCalculator.new
       allow(Ferociacalc::TermDepositCalculator).to receive(:new).and_return(calculator)
       allow(calculator).to receive(:call)
 

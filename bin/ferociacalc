@@ -11,7 +11,6 @@ $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 require 'ferociacalc/cli'
 
 begin
-  puts 'Usage: ferociacalc <initial> <rate_pa> <term_in_months> <compounding_frequency_per_year>'
   puts Ferociacalc::CLI.new(ARGV).calculate
 rescue StandardError => e
   puts e.message

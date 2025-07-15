@@ -7,8 +7,8 @@ describe Ferociacalc::TermDepositCalculator do
     let(:args) do
       {
         initial_deposit: 1000,
-        interest_rate: 3.5,
-        deposit_term: 12,
+        interest_rate: 0.035,
+        deposit_term: 1,
         interest_frequency: 1
       }
     end
@@ -24,8 +24,8 @@ describe Ferociacalc::TermDepositCalculator do
       let(:args) do
         {
           initial_deposit: 1000,
-          interest_rate: 5.0,
-          deposit_term: 12,
+          interest_rate: 0.05,
+          deposit_term: 1,
           interest_frequency: 4
         }
       end
@@ -40,8 +40,8 @@ describe Ferociacalc::TermDepositCalculator do
       let(:args) do
         {
           initial_deposit: 1000.0,
-          interest_rate: 3.50,
-          deposit_term: 12,
+          interest_rate: 0.035,
+          deposit_term: 1,
           interest_frequency: 12
         }
       end
@@ -56,8 +56,8 @@ describe Ferociacalc::TermDepositCalculator do
       let(:args) do
         {
           initial_deposit: 1000,
-          interest_rate: 5.0,
-          deposit_term: 12,
+          interest_rate: 0.05,
+          deposit_term: 1,
           interest_frequency: 0
         }
       end
