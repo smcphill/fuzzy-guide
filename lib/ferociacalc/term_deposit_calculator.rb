@@ -15,6 +15,49 @@ module Ferociacalc
       )
     end
 
+    def self.inputs # rubocop:disable Metrics/MethodLength
+      interest_periods = %w[monthly quarterly annually maturity]
+      # defines the inputs this calculator requires. the toplevel keys here are used by `#call`
+      {
+        initial_deposit: {
+          short_opt: '-d DOLLARS',
+          long_opt: 'DOLLARS',
+          option_type: Float,
+          description: 'Required Initial deposit amount in dollars ($1_000.00 - $1_500_000.00)',
+          requires: lambda do |val|
+            raise "must provide a valid initial deposit amount (was #{val})" unless (val <= 1_500_500) && (val >= 1_000)
+          end
+        },
+        interest_rate: {
+          short_opt: '-i PERCENT',
+          long_opt: 'PERCENT',
+          option_type: Float,
+          description: 'Required Interest rate % p.a (0-15; e.g. 3% is 3, not 0.03)',
+          requires: lambda do |val|
+            raise "must provide a valid interest rate number (was #{val})" unless (val >= 0) && (val <= 15)
+          end
+        },
+        deposit_term: {
+          short_opt: '-t MONTHS',
+          long_opt: 'MONTHS',
+          option_type: Integer,
+          description: 'Required Deposit term in months (3-60; e.g. 12)',
+          requires: lambda do |val|
+            raise "must provide a valid number of months (was #{val})" unless (val >= 3) && (val <= 60)
+          end
+        },
+        interest_period: {
+          short_opt: "-p PERIOD < #{interest_periods.join(' | ')} >",
+          long_opt: "PERIOD < #{interest_periods.join(' | ')} >",
+          option_type: String,
+          description: "Required Interest payment period (e.g. #{interest_periods[0]})",
+          requires: lambda do |val|
+            raise "must provide a valid interest period (was #{val})" unless interest_periods.include?(val)
+          end
+        }
+      }
+    end
+
     private_methods
 
     # we need to compound a _fixed term_ deposit: A = P (1 + r/n)^(nt)
