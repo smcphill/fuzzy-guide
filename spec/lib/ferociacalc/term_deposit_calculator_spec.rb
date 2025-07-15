@@ -1,6 +1,8 @@
-require 'term_deposit_calculator'
+# frozen_string_literal: true
 
-describe TermDepositCalculator do
+require 'ferociacalc/term_deposit_calculator'
+
+describe Ferociacalc::TermDepositCalculator do
   let(:args) do
     {
       initial_deposit: 1000,
@@ -12,7 +14,7 @@ describe TermDepositCalculator do
 
   context 'with annual frequency' do
     it 'works' do
-      expected_output = "    Final balance: $1035.00\n    Total interest earned:  $35.00\n"
+      expected_output = "Final balance: $1035.00\nTotal interest earned:  $35.00\n"
       expect(described_class.new.call(**args)).to eq(expected_output)
     end
   end
@@ -28,7 +30,7 @@ describe TermDepositCalculator do
     end
 
     it 'works' do
-      expected_output = "    Final balance: $1051.00\n    Total interest earned:  $51.00\n"
+      expected_output = "Final balance: $1051.00\nTotal interest earned:  $51.00\n"
       expect(described_class.new.call(**args)).to eq(expected_output)
     end
   end
@@ -44,7 +46,7 @@ describe TermDepositCalculator do
     end
 
     it 'works' do
-      expected_output = "    Final balance: $1036.00\n    Total interest earned:  $36.00\n"
+      expected_output = "Final balance: $1036.00\nTotal interest earned:  $36.00\n"
       expect(described_class.new.call(**args)).to eq(expected_output)
     end
   end
@@ -60,7 +62,7 @@ describe TermDepositCalculator do
     end
 
     it 'works' do
-      expected_output = "    Final balance: $1050.00\n    Total interest earned:  $50.00\n"
+      expected_output = "Final balance: $1050.00\nTotal interest earned:  $50.00\n"
       expect(described_class.new.call(**args)).to eq(expected_output)
     end
   end
