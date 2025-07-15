@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'ferociacalc/result'
+
 # A functional term deposit calculator
 module Ferociacalc
   class TermDepositCalculator
@@ -74,16 +76,13 @@ module Ferociacalc
     # n = (compounding_frequency) the compounding frequency
     # t = (term) the deposit term in years
     # (source: https://www.ujjivansfb.in/banking-blogs/deposits/how-compound-interest-in-fixed-deposits-work)
+    # returns a Ferociacalc::Result
     def calculate_compounding_term_deposit(principal:, rate:, term:, compounding_frequency:)
       maturity_calculation = -> { principal * (1 + (rate * term)) }
       periodic_calculation = -> { principal * ((1 + (rate / compounding_frequency))**(compounding_frequency * term)) }
 
       calculation = compounding_frequency.zero? ? maturity_calculation.call :  periodic_calculation.call
-
-      <<~HEREDOC
-        Final balance: $#{'%.2f' % calculation.round(0)}
-        Total interest earned:  $#{'%.2f' % (calculation - principal).round(0)}
-      HEREDOC
+      Ferociacalc::Result.new(calculation.to_f, (calculation - principal).to_f)
     end
 
     def self.interest_periods

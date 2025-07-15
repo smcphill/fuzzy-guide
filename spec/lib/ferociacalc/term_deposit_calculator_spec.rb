@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'ferociacalc/term_deposit_calculator'
+require 'ferociacalc/result'
 
 describe Ferociacalc::TermDepositCalculator do
   describe '#call' do
@@ -15,8 +16,10 @@ describe Ferociacalc::TermDepositCalculator do
 
     context 'with annual frequency' do
       it 'works' do
-        expected_output = "Final balance: $1035.00\nTotal interest earned:  $35.00\n"
-        expect(described_class.new.call(**args)).to eq(expected_output)
+        result = described_class.new.call(**args)
+
+        expect(result.total).to be_within(0.5).of(1035.0)
+        expect(result.interest_accrued).to be_within(0.5).of(35.0)
       end
     end
 
@@ -31,8 +34,10 @@ describe Ferociacalc::TermDepositCalculator do
       end
 
       it 'works' do
-        expected_output = "Final balance: $1051.00\nTotal interest earned:  $51.00\n"
-        expect(described_class.new.call(**args)).to eq(expected_output)
+        result = described_class.new.call(**args)
+
+        expect(result.total).to be_within(0.5).of(1051.0)
+        expect(result.interest_accrued).to be_within(0.5).of(51.0)
       end
     end
 
@@ -47,8 +52,10 @@ describe Ferociacalc::TermDepositCalculator do
       end
 
       it 'works' do
-        expected_output = "Final balance: $1036.00\nTotal interest earned:  $36.00\n"
-        expect(described_class.new.call(**args)).to eq(expected_output)
+        result = described_class.new.call(**args)
+
+        expect(result.total).to be_within(0.5).of(1036.0)
+        expect(result.interest_accrued).to be_within(0.5).of(36.0)
       end
     end
 
@@ -63,8 +70,10 @@ describe Ferociacalc::TermDepositCalculator do
       end
 
       it 'works' do
-        expected_output = "Final balance: $1050.00\nTotal interest earned:  $50.00\n"
-        expect(described_class.new.call(**args)).to eq(expected_output)
+        result = described_class.new.call(**args)
+
+        expect(result.total).to be_within(0.5).of(1050.0)
+        expect(result.interest_accrued).to be_within(0.5).of(50.0)
       end
     end
   end

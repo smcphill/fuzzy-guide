@@ -11,7 +11,7 @@ $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 require 'ferociacalc/cli'
 
 begin
-  puts Ferociacalc::CLI.new(ARGV).calculate
+  Ferociacalc::CLI.new(ARGV).call
 rescue StandardError => e
   puts e.message
 end

@@ -16,11 +16,26 @@ module Ferociacalc
       parse_options(args)
     end
 
+    def call
+      result = calculate
+      present(result)
+    end
+
+    private_methods
+
     def calculate
       @calculator.call(**@defined_inputs)
     end
 
-    private_methods
+    # Inline CLI Presenter: dumps the formatted result to stdout
+    def present(result)
+      formatted_result = <<~HEREDOC
+        Final balance: $#{'%.2f' % result.total.round(0)}
+        Total interest earned:  $#{'%.2f' % result.interest_accrued.round(0)}
+      HEREDOC
+
+      puts formatted_result
+    end
 
     # Inline parser: populates @defined_inputs as required by @calculator
     def parse_options(args)
