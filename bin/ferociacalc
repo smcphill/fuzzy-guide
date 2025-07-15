@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Initial MVP bootstrapper
+
+# modify load path to include project lib
+current_dir = File.dirname(__FILE__)
+libdir = "#{current_dir}/../lib"
+$LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
+
+require 'mvp'
+
+begin
+  MVP.new.call
+rescue StandardError => e
+  puts e.message
+end
