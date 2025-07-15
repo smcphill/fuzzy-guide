@@ -75,7 +75,7 @@ describe Ferociacalc::TermDepositCalculator do
     end
 
     it 'has the expected input keys' do
-      expected_keys = %i[initial_deposit interest_rate deposit_term interest_period]
+      expected_keys = %i[initial_deposit interest_rate deposit_term interest_frequency]
       expect(described_class.inputs.keys).to match_array(expected_keys)
     end
 
@@ -90,17 +90,21 @@ describe Ferociacalc::TermDepositCalculator do
         expect(input[:option_type]).to eq(Float)
       end
 
-      it 'requires positive values gte 1000' do
-        expect { input[:requires].call(1000) }.to_not raise_error
+      it 'requires positive values gte 1_000' do
+        expect { input[:requires].call(1_000) }.to_not raise_error
 
       end
 
-      it 'raises on positive values lt 1000' do
+      it 'raises on values lt 1_000' do
         expect { input[:requires].call(10) }.to raise_error(/must provide a valid initial deposit amount/)
       end
 
-      it 'raises on negative values' do
-        expect { input[:requires].call(-2) }.to raise_error(/must provide a valid initial deposit amount/)
+      it 'raises on values gt 1_500_000' do
+        expect { input[:requires].call(2_000_000) }.to raise_error(/must provide a valid initial deposit amount/)
+      end
+
+      it 'has a noop marshal' do
+        expect(input[:marshal].call(1_000)).to eq(1_000)
       end
     end
 
@@ -123,6 +127,10 @@ describe Ferociacalc::TermDepositCalculator do
       it 'raises on negative values' do
         expect { input[:requires].call(-2) }.to raise_error(/must provide a valid interest rate number/)
       end
+
+      it 'is marshalled into a decimal' do
+        expect(input[:marshal].call(3.5)).to eq(0.035)
+      end
     end
 
     describe 'deposit_term' do
@@ -144,10 +152,14 @@ describe Ferociacalc::TermDepositCalculator do
       it 'raises on negative values' do
         expect { input[:requires].call(-2) }.to raise_error(/must provide a valid number of months/)
       end
+
+      it 'is marshalled from months into years' do
+        expect(input[:marshal].call(18)).to eq(1.5)
+      end
     end
 
     describe 'interest_period' do
-      let(:input) { described_class.inputs[:interest_period] }
+      let(:input) { described_class.inputs[:interest_frequency] }
 
       it 'has the expected short option' do
         expect(input[:short_opt]).to match(/^-p/)

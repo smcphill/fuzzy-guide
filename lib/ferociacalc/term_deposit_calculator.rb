@@ -15,8 +15,9 @@ module Ferociacalc
       )
     end
 
+    # TODO: way too much responsibility for anonymous hashes (domain objects lurking)
+    # (also tightly coupled to 'optparse': not appropriate responsibility for the Calculator)
     def self.inputs # rubocop:disable Metrics/MethodLength
-      interest_periods = %w[monthly quarterly annually maturity]
       # defines the inputs this calculator requires. the toplevel keys here are used by `#call`
       {
         initial_deposit: {
@@ -26,7 +27,8 @@ module Ferociacalc
           description: 'Required Initial deposit amount in dollars ($1_000.00 - $1_500_000.00)',
           requires: lambda do |val|
             raise "must provide a valid initial deposit amount (was #{val})" unless (val <= 1_500_500) && (val >= 1_000)
-          end
+          end,
+          marshal: ->(val) { val }
         },
         interest_rate: {
           short_opt: '-i PERCENT',
@@ -35,7 +37,8 @@ module Ferociacalc
           description: 'Required Interest rate % p.a (0-15; e.g. 3% is 3, not 0.03)',
           requires: lambda do |val|
             raise "must provide a valid interest rate number (was #{val})" unless (val >= 0) && (val <= 15)
-          end
+          end,
+          marshal: ->(val) { (val / 100).to_f }
         },
         deposit_term: {
           short_opt: '-t MONTHS',
@@ -44,16 +47,18 @@ module Ferociacalc
           description: 'Required Deposit term in months (3-60; e.g. 12)',
           requires: lambda do |val|
             raise "must provide a valid number of months (was #{val})" unless (val >= 3) && (val <= 60)
-          end
+          end,
+          marshal: ->(val) { (val / 12.0) }
         },
-        interest_period: {
-          short_opt: "-p PERIOD < #{interest_periods.join(' | ')} >",
-          long_opt: "PERIOD < #{interest_periods.join(' | ')} >",
+        interest_frequency: {
+          short_opt: "-p PERIOD < #{interest_periods.keys.join(' | ')} >",
+          long_opt: "PERIOD < #{interest_periods.keys.join(' | ')} >",
           option_type: String,
-          description: "Required Interest payment period (e.g. #{interest_periods[0]})",
+          description: "Required Interest payment period (e.g. #{interest_periods.keys[0]})",
           requires: lambda do |val|
-            raise "must provide a valid interest period (was #{val})" unless interest_periods.include?(val)
-          end
+            raise "must provide a valid interest period (was #{val})" unless interest_periods.keys.include?(val)
+          end,
+          marshal: ->(val) { interest_periods[val] }
         }
       }
     end
@@ -85,6 +90,15 @@ module Ferociacalc
         Final balance: $#{'%.2f' % calculation.round(0)}
         Total interest earned:  $#{'%.2f' % (calculation - principal).round(0)}
       HEREDOC
+    end
+
+    def self.interest_periods
+      {
+        'monthly' => 12,
+        'quarterly' => 4,
+        'annually' => 1,
+        'maturity' => 0
+      }
     end
   end
 end
