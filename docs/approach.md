@@ -118,4 +118,14 @@ Initial thoughts dumped into [North Star](north_star.md)
 
 ### MVP
 
-...
+MVP established `10bb134`
+
+- tricky to work between different time periods (e.g. 12 months = 1 year)
+- the base calculator works in year period (interest is p.a.; compounding frequency is p.a.)
+- presenting the required result loses some precision: a presenter can deal with this, and the calculator (and results) can retain precision 
+
+### Review application design
+
+I'm going to skip this iteration as I'm running on a time limit and want to fulfill Functionality and Usability while hopefully retaining Simplicity (at the expense of focus on Application design)
+
+### CLI Runner and Parser
