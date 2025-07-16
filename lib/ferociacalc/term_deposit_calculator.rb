@@ -24,44 +24,36 @@ module Ferociacalc
       # defines the inputs this calculator requires. the toplevel keys here are used by `#call`
       {
         initial_deposit: {
-          short_opt: '-d DOLLARS',
-          long_opt: 'DOLLARS',
           option_type: ->(val) { Float(val) },
           description: 'Required Initial deposit amount in dollars ($1_000.00 - $1_500_000.00)',
-          requires: lambda do |val|
+          validator: lambda do |val|
             raise "must provide a valid initial deposit amount (was #{val})" unless (val <= 1_500_500) && (val >= 1_000)
           end,
-          marshal: ->(val) { val }
+          transformer: ->(val) { val }
         },
         interest_rate: {
-          short_opt: '-i PERCENT',
-          long_opt: 'PERCENT',
           option_type: ->(val) { Float(val) },
           description: 'Required Interest rate % p.a (0-15; e.g. 3% is 3, not 0.03)',
-          requires: lambda do |val|
+          validator: lambda do |val|
             raise "must provide a valid interest rate number (was #{val})" unless (val >= 0) && (val <= 15)
           end,
-          marshal: ->(val) { (val / 100).to_f }
+          transformer: ->(val) { (val / 100).to_f }
         },
         deposit_term: {
-          short_opt: '-t MONTHS',
-          long_opt: 'MONTHS',
           option_type: ->(val) { Integer(val) },
           description: 'Required Deposit term in months (3-60; e.g. 12)',
-          requires: lambda do |val|
+          validator: lambda do |val|
             raise "must provide a valid number of months (was #{val})" unless (val >= 3) && (val <= 60)
           end,
-          marshal: ->(val) { (val / 12.0) }
+          transformer: ->(val) { (val / 12.0) }
         },
         interest_frequency: {
-          short_opt: "-p PERIOD < #{interest_periods.keys.join(' | ')} >",
-          long_opt: "PERIOD < #{interest_periods.keys.join(' | ')} >",
           option_type: ->(val) { String(val) },
           description: "Required Interest payment period (i.e. #{interest_periods.keys.join(', ')})",
-          requires: lambda do |val|
+          validator: lambda do |val|
             raise "must provide a valid interest period (was #{val})" unless interest_periods.keys.include?(val)
           end,
-          marshal: ->(val) { interest_periods[val] }
+          transformer: ->(val) { interest_periods[val] }
         }
       }
     end
