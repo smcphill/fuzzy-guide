@@ -39,7 +39,7 @@ module Ferociacalc
     end
 
     def self.print_help(expected_args, input_definitions)
-      input_details = expected_args.map {|arg| "#{arg}:    \t#{input_definitions[arg][:description]}"}
+      input_details = expected_args.map {|arg| "#{arg}:    #{input_definitions[arg].description}"}
 
       puts <<~HEREDOC
         #{banner(expected_args)}
@@ -58,7 +58,7 @@ module Ferociacalc
       calculator_args = %i[initial_deposit interest_rate deposit_term interest_frequency]
       calculator_inputs = @calculator.class.inputs
       if args.empty? || args.size != calculator_args.size
-        self.class.print_help_and_exit(calculator_args, calculator_inputs, 'Exiting')
+        raise 'Exiting'
       end
 
       parser = Ferociacalc::Parser.new(@calculator, calculator_args)

@@ -10,6 +10,7 @@ module Ferociacalc
     end
 
     # Returns a hash of calculator inputs, keyed by input name
+    # may raise
     def parse(args)
       collected_inputs = {}
       @calculator_args.each_with_index do |arg, index|
@@ -23,10 +24,10 @@ module Ferociacalc
 
     # applies the input definition logic against the provide value
     def self.extract_input(input_definition, value)
-      typed_value = input_definition[:option_type].call(value)
-      input_definition[:validator].call(typed_value)
+      typed_value = input_definition.transform_type(value)
 
-      input_definition[:transformer].call(typed_value)
+      input_definition.validate_value(typed_value)
+      input_definition.transform_value(typed_value)
     end
 
   end
