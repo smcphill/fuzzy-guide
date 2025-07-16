@@ -5,7 +5,7 @@ require 'ferociacalc/result'
 
 describe Ferociacalc::CLI do
   describe '#call' do
-    let(:args) { %w[-d 1000 -i 3.5 -t 12 -p monthly].freeze }
+    let(:args) { %w[1000 3.5 12 monthly].freeze }
     let(:expected_inputs) do
       {
         initial_deposit: 1000.0,
