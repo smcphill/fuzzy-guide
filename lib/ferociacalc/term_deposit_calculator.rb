@@ -41,10 +41,10 @@ module Ferociacalc
     # (source: https://www.ujjivansfb.in/banking-blogs/deposits/how-compound-interest-in-fixed-deposits-work)
     # returns a Ferociacalc::Result
     def calculate_compounding_term_deposit(principal:, rate:, term:, compounding_frequency:)
-      maturity_calculation = -> { principal * (1 + (rate * term)) }
-      periodic_calculation = -> { principal * ((1 + (rate / compounding_frequency))**(compounding_frequency * term)) }
+      calculate_maturity = -> { self.class.maturity_calculation(principal, rate, term) }
+      calculate_periodic = -> { self.class.periodic_calculation(principal, rate, term, compounding_frequency) }
 
-      calculation = compounding_frequency.zero? ? maturity_calculation.call :  periodic_calculation.call
+      calculation = compounding_frequency.zero? ? calculate_maturity.call : calculate_periodic.call
       Ferociacalc::Result.new(calculation.to_f, (calculation - principal).to_f)
     end
 
@@ -55,6 +55,14 @@ module Ferociacalc
         'annually' => 1,
         'maturity' => 0
       }
+    end
+
+    def self.maturity_calculation(principal, rate, term)
+      principal * (1 + (rate * term))
+    end
+
+    def self.periodic_calculation(principal, rate, term, compounding_frequency)
+      principal * ((1 + (rate / compounding_frequency))**(compounding_frequency * term))
     end
 
     def self.initial_deposit_input
