@@ -96,7 +96,7 @@ describe Ferociacalc::TermDepositCalculator do
       end
 
       it 'is a float' do
-        expect(input[:option_type]).to eq(Float)
+        expect(input[:option_type].call(5).class).to eq(Float)
       end
 
       it 'requires positive values gte 1_000' do
@@ -125,7 +125,7 @@ describe Ferociacalc::TermDepositCalculator do
       end
 
       it 'is a float' do
-        expect(input[:option_type]).to eq(Float)
+        expect(input[:option_type].call(10).class).to eq(Float)
       end
 
       it 'requires positive values' do
@@ -150,7 +150,7 @@ describe Ferociacalc::TermDepositCalculator do
       end
 
       it 'is an integer' do
-        expect(input[:option_type]).to eq(Integer)
+        expect(input[:option_type].call(10.0).class).to eq(Integer)
       end
 
       it 'requires a valid value' do
@@ -175,7 +175,7 @@ describe Ferociacalc::TermDepositCalculator do
       end
 
       it 'is a String' do
-        expect(input[:option_type]).to eq(String)
+        expect(input[:option_type].call(123).class).to eq(String)
       end
 
       it 'requires a valid interest period' do
