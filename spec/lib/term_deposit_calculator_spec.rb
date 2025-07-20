@@ -4,8 +4,8 @@ describe TermDepositCalculator do
   let(:args) do
     {
       initial_deposit: 1000,
-      interest_rate: 3.5,
-      deposit_term: 12,
+      interest_rate: 0.035,
+      deposit_term: 1.0,
       interest_frequency: 1
     }
   end
@@ -21,14 +21,14 @@ describe TermDepositCalculator do
     let(:args) do
       {
         initial_deposit: 1000,
-        interest_rate: 5.0,
-        deposit_term: 12,
+        interest_rate: 0.035,
+        deposit_term: 1.0,
         interest_frequency: 4
       }
     end
 
     it 'works' do
-      expected_output = "    Final balance: $1051.00\n    Total interest earned:  $51.00\n"
+      expected_output = "    Final balance: $1035.00\n    Total interest earned:  $35.00\n"
       expect(described_class.new.call(**args)).to eq(expected_output)
     end
   end
@@ -37,8 +37,8 @@ describe TermDepositCalculator do
     let(:args) do
       {
         initial_deposit: 1000.0,
-        interest_rate: 3.50,
-        deposit_term: 12,
+        interest_rate: 0.035,
+        deposit_term: 1.0,
         interest_frequency: 12
       }
     end
@@ -52,9 +52,9 @@ describe TermDepositCalculator do
   context 'with frequency at maturity' do
     let(:args) do
       {
-        initial_deposit: 1000,
-        interest_rate: 5.0,
-        deposit_term: 12,
+        initial_deposit: 1000.0,
+        interest_rate: 0.05,
+        deposit_term: 1.0,
         interest_frequency: 0
       }
     end
