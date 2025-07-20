@@ -12,6 +12,27 @@ require 'cli'
 
 begin
   puts 'Usage: ferociacalc <initial> <rate_pa> <term_in_months> <compounding_frequency_per_year>'
+  puts <<~HEREDOC
+    Where:
+    <initial>
+    \tinitial deposit in $ e.g. 1000 for $1000
+    <rate_pa>
+    \tpercentage p.a. e.g. 3.5 for 3.5%
+    <term_in_months>
+    \tmonths for the deposit term e.g. 12 for 1 year
+    <compounding_frequency_per_year>
+    \tone of [monthly, quarterly, annually, maturity]
+
+  HEREDOC
+  puts <<~HEREDOC
+    Given:
+    Initial deposit =$#{format('%.2f', ARGV[0].to_f.round(0))};
+    Interest rate =#{ARGV[1].to_f}% per annum;
+    Deposit term =#{ARGV[2].to_i} months;
+    Frequency =#{ARGV[3]} times per annum (at maturity, there are 0 times per annum).)
+
+  HEREDOC
+
   puts CLI.new.call(ARGV)
 rescue StandardError => e
   puts e.message
