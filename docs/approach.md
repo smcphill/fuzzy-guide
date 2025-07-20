@@ -143,7 +143,7 @@ MVP established `10bb134`
 - [x] milestone: fully functional Parser, 
   - accepts: user input 
   - parser: arity, to type
-- [ ] milestone: functional Validator
+- [x] milestone: functional Validator
     - expects: parsed input of expected type
     - validator: within bounds
 - [x] milestone: functional Transformer
@@ -165,3 +165,7 @@ MVP established `10bb134`
 ### Input validation
 
 - Calculator concern
+
+### Extract a presenter
+
+:no_good: out of time
