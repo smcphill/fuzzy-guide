@@ -66,4 +66,48 @@ describe TermDepositCalculator do
       end
     end
   end
+
+  describe '.validate_initial_deposit' do
+    it 'returns the value when valid' do
+      expect(described_class.validate_initial_deposit(1000.0)).to eq(1000.0)
+    end
+
+    it 'raises when invalid' do
+      error_message = 'Initial deposit must be within $1_000-$1_500_000'
+      expect { described_class.validate_initial_deposit(10.0) }.to raise_error.with_message(error_message)
+    end
+  end
+
+  describe '.validate_interest_rate' do
+    it 'returns the value when valid' do
+      expect(described_class.validate_interest_rate(0.035)).to eq(0.035)
+    end
+
+    it 'raises when invalid' do
+      error_message = 'Interest rate must be within 0%-15%'
+      expect { described_class.validate_interest_rate(0.5) }.to raise_error.with_message(error_message)
+    end
+  end
+
+  describe '.validate_deposit_term' do
+    it 'returns the value when valid' do
+      expect(described_class.validate_deposit_term(2.5)).to eq(2.5)
+    end
+
+    it 'raises when invalid' do
+      error_message = 'Deposit term must be within 1-5 years'
+      expect { described_class.validate_deposit_term(0.5) }.to raise_error.with_message(error_message)
+    end
+  end
+
+  describe '.validate_interest_frequency' do
+    it 'returns the value when valid' do
+      expect(described_class.validate_interest_frequency(12)).to eq(12)
+    end
+
+    it 'raises when invalid' do
+      error_message = 'Interest frequency must be one of monthly, quarterly, annually, maturity'
+      expect { described_class.validate_interest_frequency(60) }.to raise_error.with_message(error_message)
+    end
+  end
 end
