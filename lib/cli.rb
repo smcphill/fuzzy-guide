@@ -1,7 +1,7 @@
 require 'term_deposit_calculator'
 
 # Initial MVP runner
-class MVP
+class CLI
   def call(args)
     # the calculator expects mixed time periods: term in months, rate and frequency per year
     TermDepositCalculator.new.call(

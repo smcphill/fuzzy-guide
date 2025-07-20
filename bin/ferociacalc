@@ -8,11 +8,11 @@ current_dir = File.dirname(__FILE__)
 libdir = "#{current_dir}/../lib"
 $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 
-require 'mvp'
+require 'cli'
 
 begin
   puts 'Usage: ferociacalc <initial> <rate_pa> <term_in_months> <compounding_frequency_per_year>'
-  puts MVP.new.call(ARGV)
+  puts CLI.new.call(ARGV)
 rescue StandardError => e
   puts e.message
 end

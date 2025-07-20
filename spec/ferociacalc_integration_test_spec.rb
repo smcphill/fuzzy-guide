@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'mvp'
+require 'cli'
 
 describe "ferocioacalc integration tests" do
   it 'calculates correctly' do
