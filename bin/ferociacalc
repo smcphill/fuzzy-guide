@@ -24,6 +24,9 @@ begin
     \tone of [monthly, quarterly, annually, maturity]
 
   HEREDOC
+
+  raise 'Exiting (check usage)' unless ARGV.size == 4
+
   puts <<~HEREDOC
     Given:
     Initial deposit =$#{format('%.2f', ARGV[0].to_f.round(0))};
