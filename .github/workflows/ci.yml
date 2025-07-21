@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - 'main'      # pushes to main (pull_requests are taken care of below)
+  pull_request:
+    branches:
+      - main      # PRs targeting main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3.8' # Update to match your project's Ruby version
+
+      - name: Install dependencies
+        run: |
+          bundle install
+
+      - name: Run CI
+        run: make ci
