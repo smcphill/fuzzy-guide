@@ -32,7 +32,7 @@ begin
     Initial deposit =$#{format('%.2f', ARGV[0].to_f.round(0))};
     Interest rate =#{ARGV[1].to_f}% per annum;
     Deposit term =#{ARGV[2].to_i} months;
-    Frequency =#{ARGV[3]} times per annum (at maturity, there are 0 times per annum).)
+    Frequency =#{ARGV[3]} times per annum (at maturity, there are 0 times per annum)
 
   HEREDOC
 
