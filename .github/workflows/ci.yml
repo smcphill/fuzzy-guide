@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - '**'      # Matches all branches on push
+      - 'main'      # pushes to main (pull_requests are taken care of below)
   pull_request:
     branches:
       - main      # PRs targeting main
