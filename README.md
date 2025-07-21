@@ -65,7 +65,16 @@ cd <the-project>
 bundle install
 ```
 
-### Usage
+### Usage via Makefile
+
+- `make test`: run full test suite (unit + integration)
+- `make integration-test`: run integration test suite
+- `make lint`: run rubocop
+- `make fix-lint`: run rubocop in autocorrect mode
+- `make ci`: runs quieter variants of `make test && make lint`
+- `make show-help`: displays usage information for the supplied term deposit calculator
+
+### Direct usage
 
 Usage is always displayed
 
