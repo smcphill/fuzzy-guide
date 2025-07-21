@@ -2,7 +2,7 @@
 
 require 'cli'
 
-describe "ferocioacalc integration tests" do
+describe 'ferocioacalc integration tests' do
   let(:banner) { "Usage: ferociacalc <initial> <rate_pa> <term_in_months> <compounding_frequency_per_year>\n" }
 
   let(:usage) do
@@ -33,7 +33,6 @@ describe "ferocioacalc integration tests" do
   it 'calculates correctly' do
     expected_output = "#{banner}#{usage}\n#{given}    Final balance: $1036.00\n    Total interest earned:  $36.00\n"
 
-    expect { system("./bin/ferociacalc 1000 3.5 12 monthly") }.to output(expected_output).to_stdout_from_any_process
+    expect { system('./bin/ferociacalc 1000 3.5 12 monthly') }.to output(expected_output).to_stdout_from_any_process
   end
-
 end

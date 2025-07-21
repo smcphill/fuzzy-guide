@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # A functional term deposit calculator
 class TermDepositCalculator
   # perform the calculation given the required inputs
@@ -21,7 +23,7 @@ class TermDepositCalculator
   end
 
   def self.validate_interest_rate(interest_rate)
-    raise 'Interest rate must be within 0%-15%' if interest_rate < 0 || interest_rate > 0.15
+    raise 'Interest rate must be within 0%-15%' if interest_rate.negative? || interest_rate > 0.15
 
     interest_rate
   end
@@ -60,11 +62,11 @@ class TermDepositCalculator
     maturity_calculation = -> { principal.to_f * (1 + (rate * term)) }
     periodic_calculation = -> { principal.to_f * ((1 + (rate / compounding_frequency))**(compounding_frequency * term)) }
 
-    calculation = compounding_frequency.zero? ? maturity_calculation.call :  periodic_calculation.call
+    calculation = compounding_frequency.zero? ? without_compounding.call : periodic_calculation.call
 
     <<-HEREDOC
-    Final balance: $#{'%.2f' % calculation.round(0)}
-    Total interest earned:  $#{'%.2f' % (calculation - principal).round(0)}
+    Final balance: $#{format('%.2f', calculation.round(0))}
+    Total interest earned:  $#{format('%.2f', (calculation - principal).round(0))}
     HEREDOC
   end
 end

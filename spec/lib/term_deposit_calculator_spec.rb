@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'term_deposit_calculator'
 
 describe TermDepositCalculator do

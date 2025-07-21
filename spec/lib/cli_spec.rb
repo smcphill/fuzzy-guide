@@ -4,7 +4,7 @@ require 'rspec'
 require 'cli'
 
 describe CLI do
-  let(:args) { %w[1000 3.5 18 quarterly]}
+  let(:args) { %w[1000 3.5 18 quarterly] }
   let(:expected_args) do
     {
       initial_deposit: 1000.0,
@@ -61,8 +61,9 @@ describe CLI do
     end
 
     it 'raises on unexpected frequency' do
-      expect { described_class.parse_interest_frequency('unexpected') }.to raise_error.with_message('Unknown interest frequency')
+      expect do
+        described_class.parse_interest_frequency('unexpected')
+      end.to raise_error.with_message('Unknown interest frequency')
     end
   end
-
 end
