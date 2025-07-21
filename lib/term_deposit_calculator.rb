@@ -59,8 +59,8 @@ class TermDepositCalculator
   # t = (term) the deposit term in years
   # (source: https://www.ujjivansfb.in/banking-blogs/deposits/how-compound-interest-in-fixed-deposits-work)
   def calculate_compounding_term_deposit(principal:, rate:, term:, compounding_frequency:)
-    maturity_calculation = -> { principal.to_f * (1 + (rate * term)) }
-    periodic_calculation = -> { principal.to_f * ((1 + (rate / compounding_frequency))**(compounding_frequency * term)) }
+    without_compounding = -> { maturity_calculation(principal, rate, term) }
+    periodic_calculation = -> { compounding_calculation(principal, rate, term, compounding_frequency) }
 
     calculation = compounding_frequency.zero? ? without_compounding.call : periodic_calculation.call
 
@@ -68,5 +68,13 @@ class TermDepositCalculator
     Final balance: $#{format('%.2f', calculation.round(0))}
     Total interest earned:  $#{format('%.2f', (calculation - principal).round(0))}
     HEREDOC
+  end
+
+  def maturity_calculation(principal, rate, term)
+    principal * (1 + (rate * term))
+  end
+
+  def compounding_calculation(principal, rate, term, compounding_frequency)
+    principal * ((1 + (rate / compounding_frequency))**(compounding_frequency * term))
   end
 end
