@@ -1,7 +1,14 @@
 # frozen_string_literal: true
 
 # raised on invalid input
-class InvalidInputError < StandardError; end
+class InvalidInputError < StandardError
+  attr_reader :input, :reason
+
+  def initialize(error_message, input)
+    super(error_message)
+    @input = input
+  end
+end
 
 # A functional term deposit calculator
 class TermDepositCalculator
@@ -22,21 +29,23 @@ class TermDepositCalculator
 
   def self.validate_initial_deposit(initial_deposit)
     if initial_deposit < 1_000 || initial_deposit > 1_500_000
-      raise InvalidInputError,
-            'Initial deposit must be within $1_000-$1_500_000'
+      invalid_message = 'Initial deposit must be within $1_000-$1_500_000'
+      raise InvalidInputError.new(invalid_message, :initial_deposit)
     end
 
     initial_deposit
   end
 
   def self.validate_interest_rate(interest_rate)
-    raise InvalidInputError, 'Interest rate must be within 0%-15%' if interest_rate.negative? || interest_rate > 0.15
+    invalid_message = 'Interest rate must be within 0%-15%'
+    raise InvalidInputError.new(invalid_message, :interest_rate) if interest_rate.negative? || interest_rate > 0.15
 
     interest_rate
   end
 
   def self.validate_deposit_term(deposit_term)
-    raise InvalidInputError, 'Deposit term must be within 1-5 years' if deposit_term < 1 || deposit_term > 5
+    invalid_message = 'Deposit term must be within 1-5 years'
+    raise InvalidInputError.new(invalid_message, :deposit_term) if deposit_term < 1 || deposit_term > 5
 
     deposit_term
   end
@@ -49,8 +58,8 @@ class TermDepositCalculator
       maturity: 0
     }
     invalid_message = "Interest frequency must be one of #{valid_frequencies.keys.join(', ')}"
-
-    raise InvalidInputError, invalid_message unless valid_frequencies.values.include?(interest_frequency)
+    invalid_error = InvalidInputError.new(invalid_message, :interest_frequency)
+    raise invalid_error unless valid_frequencies.values.include?(interest_frequency)
 
     interest_frequency
   end

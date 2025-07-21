@@ -33,7 +33,7 @@ class CLI
   # hardcoded to monthly for now
   def self.parse_interest_frequency(interest_frequency)
     frequency = frequency_periods[interest_frequency.to_sym]
-    raise ArgumentError, 'Unknown interest frequency' if frequency.nil?
+    raise ArgumentError, 'Unknown compounding frequency' if frequency.nil?
 
     frequency.to_i
   end

@@ -63,7 +63,7 @@ describe CLI do
     it 'raises on unexpected frequency' do
       expect do
         described_class.parse_interest_frequency('unexpected')
-      end.to raise_error(ArgumentError).with_message('Unknown interest frequency')
+      end.to raise_error(ArgumentError).with_message('Unknown compounding frequency')
     end
   end
 end
