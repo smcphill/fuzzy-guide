@@ -25,7 +25,7 @@ describe 'ferocioacalc integration tests' do # rubocop:disable RSpec/DescribeCla
       Initial deposit =$1000.00;
       Interest rate =3.5% per annum;
       Deposit term =12 months;
-      Frequency =monthly times per annum (at maturity, there are 0 times per annum).)
+      Frequency =monthly times per annum (at maturity, there are 0 times per annum)
 
     HEREDOC
   end
