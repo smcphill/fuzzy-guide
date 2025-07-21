@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
+# raised on invalid input
+class InvalidInputError < StandardError; end
+
 # A functional term deposit calculator
 class TermDepositCalculator
   # perform the calculation given the required inputs
   # returns a multiline string:
   #     "Final balance: $XX.00\n
   #      Total interest earned:  $XX.00\n"
+  # raises InvalidInputError on invalid input
   def call(initial_deposit:, interest_rate:, deposit_term:, interest_frequency:)
     # ensure inputs are the right shape (decimal rate, term in years)
     calculate_compounding_term_deposit(
@@ -17,19 +21,22 @@ class TermDepositCalculator
   end
 
   def self.validate_initial_deposit(initial_deposit)
-    raise 'Initial deposit must be within $1_000-$1_500_000' if initial_deposit < 1_000 || initial_deposit > 1_500_000
+    if initial_deposit < 1_000 || initial_deposit > 1_500_000
+      raise InvalidInputError,
+            'Initial deposit must be within $1_000-$1_500_000'
+    end
 
     initial_deposit
   end
 
   def self.validate_interest_rate(interest_rate)
-    raise 'Interest rate must be within 0%-15%' if interest_rate.negative? || interest_rate > 0.15
+    raise InvalidInputError, 'Interest rate must be within 0%-15%' if interest_rate.negative? || interest_rate > 0.15
 
     interest_rate
   end
 
   def self.validate_deposit_term(deposit_term)
-    raise 'Deposit term must be within 1-5 years' if deposit_term < 1 || deposit_term > 5
+    raise InvalidInputError, 'Deposit term must be within 1-5 years' if deposit_term < 1 || deposit_term > 5
 
     deposit_term
   end
@@ -43,7 +50,7 @@ class TermDepositCalculator
     }
     invalid_message = "Interest frequency must be one of #{valid_frequencies.keys.join(', ')}"
 
-    raise invalid_message unless valid_frequencies.values.include?(interest_frequency)
+    raise InvalidInputError, invalid_message unless valid_frequencies.values.include?(interest_frequency)
 
     interest_frequency
   end
