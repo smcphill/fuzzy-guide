@@ -2,7 +2,7 @@
 
 require 'cli'
 
-describe 'ferocioacalc integration tests' do
+describe 'ferocioacalc integration tests' do # rubocop:disable RSpec/DescribeClass
   let(:banner) { "Usage: ferociacalc <initial> <rate_pa> <term_in_months> <compounding_frequency_per_year>\n" }
 
   let(:usage) do

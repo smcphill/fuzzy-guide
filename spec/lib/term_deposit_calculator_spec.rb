@@ -14,7 +14,7 @@ describe TermDepositCalculator do
     end
 
     context 'with annual frequency' do
-      it 'works' do
+      it 'calculates the expected result' do
         expected_output = "    Final balance: $1035.00\n    Total interest earned:  $35.00\n"
         expect(described_class.new.call(**args)).to eq(expected_output)
       end
@@ -30,7 +30,7 @@ describe TermDepositCalculator do
         }
       end
 
-      it 'works' do
+      it 'calculates the expected result' do
         expected_output = "    Final balance: $1035.00\n    Total interest earned:  $35.00\n"
         expect(described_class.new.call(**args)).to eq(expected_output)
       end
@@ -46,7 +46,7 @@ describe TermDepositCalculator do
         }
       end
 
-      it 'works' do
+      it 'calculates the expected result' do
         expected_output = "    Final balance: $1036.00\n    Total interest earned:  $36.00\n"
         expect(described_class.new.call(**args)).to eq(expected_output)
       end
@@ -62,7 +62,7 @@ describe TermDepositCalculator do
         }
       end
 
-      it 'works' do
+      it 'calculates the expected result' do
         expected_output = "    Final balance: $1050.00\n    Total interest earned:  $50.00\n"
         expect(described_class.new.call(**args)).to eq(expected_output)
       end
