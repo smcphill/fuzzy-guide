@@ -17,6 +17,7 @@ class TermDepositCalculator
   #     "Final balance: $XX.00\n
   #      Total interest earned:  $XX.00\n"
   # raises InvalidInputError on invalid input
+  # returns [total, interest]
   def call(initial_deposit:, interest_rate:, deposit_term:, interest_frequency:)
     # ensure inputs are the right shape (decimal rate, term in years)
     calculate_compounding_term_deposit(
@@ -80,10 +81,7 @@ class TermDepositCalculator
 
     calculation = compounding_frequency.zero? ? without_compounding.call : periodic_calculation.call
 
-    <<-HEREDOC
-    Final balance: $#{format('%.2f', calculation.round(0))}
-    Total interest earned:  $#{format('%.2f', (calculation - principal).round(0))}
-    HEREDOC
+    [calculation, calculation - principal]
   end
 
   def maturity_calculation(principal, rate, term)

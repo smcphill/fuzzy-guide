@@ -4,6 +4,7 @@ require 'rspec'
 require 'cli'
 
 describe CLI do
+  let(:calculator) { instance_double(TermDepositCalculator) }
   let(:args) { %w[1000 3.5 18 quarterly] }
   let(:expected_args) do
     {
@@ -15,13 +16,37 @@ describe CLI do
   end
 
   describe '#call' do
-    it 'calls TermDepositCalculator with args' do
-      calculator = instance_double(TermDepositCalculator)
+    before do
       allow(TermDepositCalculator).to receive(:new).and_return(calculator)
-      allow(calculator).to receive(:call)
+      allow(calculator).to receive(:call).and_return([1035.0, 35.0])
+    end
+
+    it 'calls TermDepositCalculator with args' do
       described_class.new.call(args)
 
       expect(calculator).to have_received(:call).with(expected_args)
+    end
+
+    it 'calls .present_calculation with the calculation result' do
+      allow(described_class).to receive(:present_calculation)
+
+      described_class.new.call(args)
+      expect(described_class).to have_received(:present_calculation).with(1035.0, 35.0)
+    end
+  end
+
+  describe '.present_calculation' do
+    let(:total) { 1035.0 }
+    let(:interest) { 35.0 }
+
+    before do
+      allow(TermDepositCalculator).to receive(:new).and_return(calculator)
+      allow(calculator).to receive(:call).and_return([total, interest])
+    end
+
+    it 'presents the calculated result' do
+      expected_outcome = "    Final balance: $#{total.to_i}.00\n    Total interest earned:  $#{interest.to_i}.00\n"
+      expect(described_class.present_calculation(total, interest)).to match(expected_outcome)
     end
   end
 

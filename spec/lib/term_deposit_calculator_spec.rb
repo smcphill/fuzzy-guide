@@ -14,9 +14,12 @@ describe TermDepositCalculator do
     end
 
     context 'with annual frequency' do
-      it 'calculates the expected result' do
-        expected_output = "    Final balance: $1035.00\n    Total interest earned:  $35.00\n"
-        expect(described_class.new.call(**args)).to eq(expected_output)
+      it 'calculates the expected total' do
+        expect(described_class.new.call(**args)[0]).to be_within(0.5).of(1035.00)
+      end
+
+      it 'calculates the expected interest' do
+        expect(described_class.new.call(**args)[1]).to be_within(0.5).of(35.00)
       end
     end
 
@@ -30,9 +33,12 @@ describe TermDepositCalculator do
         }
       end
 
-      it 'calculates the expected result' do
-        expected_output = "    Final balance: $1035.00\n    Total interest earned:  $35.00\n"
-        expect(described_class.new.call(**args)).to eq(expected_output)
+      it 'calculates the expected total' do
+        expect(described_class.new.call(**args)[0]).to be_within(0.5).of(1035.00)
+      end
+
+      it 'calculates the expected interest' do
+        expect(described_class.new.call(**args)[1]).to be_within(0.5).of(35.00)
       end
     end
 
@@ -46,9 +52,12 @@ describe TermDepositCalculator do
         }
       end
 
-      it 'calculates the expected result' do
-        expected_output = "    Final balance: $1036.00\n    Total interest earned:  $36.00\n"
-        expect(described_class.new.call(**args)).to eq(expected_output)
+      it 'calculates the expected total' do
+        expect(described_class.new.call(**args)[0]).to be_within(0.5).of(1036.00)
+      end
+
+      it 'calculates the expected interest' do
+        expect(described_class.new.call(**args)[1]).to be_within(0.5).of(36.00)
       end
     end
 
@@ -62,9 +71,12 @@ describe TermDepositCalculator do
         }
       end
 
-      it 'calculates the expected result' do
-        expected_output = "    Final balance: $1050.00\n    Total interest earned:  $50.00\n"
-        expect(described_class.new.call(**args)).to eq(expected_output)
+      it 'calculates the expected total' do
+        expect(described_class.new.call(**args)[0]).to be_within(0.5).of(1050.00)
+      end
+
+      it 'calculates the expected interest' do
+        expect(described_class.new.call(**args)[1]).to be_within(0.5).of(50.00)
       end
     end
   end
