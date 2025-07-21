@@ -124,18 +124,48 @@ MVP established `10bb134`
 - the base calculator works in year period (interest is p.a.; compounding frequency is p.a.)
 - presenting the required result loses some precision: a presenter can deal with this, and the calculator (and results) can retain precision 
 
-### Review application design
+### ~~Review application design~~ Next steps
 
-I'm going to skip this iteration as I'm running on a time limit and want to fulfill Functionality and Usability while hopefully retaining Simplicity (at the expense of focus on Application design)
+`git log` indicates ~40 minutes was spent on the MVP. Allowing the same for planing leaves 40 minutes of the 2 hour time limit.
 
-### CLI Runner and Parser
+**PIVOT** In the interest of Simplicity and not compromising SRP or Interface Segregation,
 
-Milestone achieved `51ce3e08473e34fea81c47594a754458ba6d1bba`
 
-Took a lot longer than expected, but I'm pretty happy with the end result. See the above commit message for more. 
+- [x] milestone: rename MVP CLI
+  - already knows about the calculator
+- [x] milestone: implement noop Input Parser, Validator and Transformer classes specifically for term deposit calculator.
+  - this approach introduces some code coupling, but keeps things simple and upholds SOLID principles
+  - Input parsing and transformation take user input and derive calculator input from it (CLI responsibility)
+  - Input validation ensures calculator input is valid (formula responsibility)
+- [x] milestone: invalid-usage Parser and accompanying help output
+  - the help output can be subsequently used for invalid input, i.e. print_help_and_exit(exit_message: str)
+  - do not output a Zero-state result (current MVP behaviour)
+- [x] milestone: fully functional Parser, 
+  - accepts: user input 
+  - parser: arity, to type
+- [x] milestone: functional Validator
+    - expects: parsed input of expected type
+    - validator: within bounds
+- [x] milestone: functional Transformer
+    - expects: validated, parsed input of expected type
+    - transformer from what the UI accepts to what the calculator expects
+- [ ] milestone: the calculator outcome can be presented
 
-Note this is a big commit that doesn't include full test coverage: I've pretty much exhausted my time limit, so will wrap things up.
 
-My last feature work will be refactoring Calculator presentation, then I'll close out my submission.
+**RISKS**
 
-### CLI Presentation
+- we may not finish extracting a result presenter (likelihood: medium; impact: low)
+- we may not finish implementing an input transformer (likelihood: medium; impact: high)
+
+### Input parsing and transformation
+
+- CLI concerns
+- get user input into the expected shape for calculator input
+
+### Input validation
+
+- Calculator concern
+
+### Extract a presenter
+
+:no_good: out of time

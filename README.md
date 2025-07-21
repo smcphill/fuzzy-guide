@@ -53,6 +53,10 @@ I've chosen Ruby for this exercise: it's been a while since I've written Ruby re
 
 I've selected [asdf](https://github.com/asdf-vm/asdf) for Ruby version management - it's similar to [rbenv](https://github.com/rbenv/rbenv) but caters for other languages as well. I've developed against MRI Ruby 3.3.8.
 
+### Update
+
+My initial submission was based on work directly commited to main. This update merges an alternate reality by way of a redo, or do-over: I've gone back to the MVP milestone and started again. See https://github.com/smcphill/fuzzy-guide/pull/4 for more.
+
 ### Installation
 
 ```bash
@@ -63,27 +67,47 @@ bundle install
 
 ### Usage
 
+Usage is always displayed
+
 ```bash
-./bin/ferociacalc -h
-Usage: ferociacalc [options]
-    -d, --initial_deposit DOLLARS    Required Initial deposit amount in dollars ($1_000.00 - $1_500_000.00)
-    -i, --interest_rate PERCENT      Required Interest rate % p.a (0-15; e.g. 3% is 3, not 0.03)
-    -t, --deposit_term MONTHS        Required Deposit term in months (3-60; e.g. 12)
-    -p PERIOD < monthly | quarterly | annually | maturity >,
-        --interest_frequency         Required Interest payment period (e.g. monthly)
+$ ./bin/ferociacalc -h
+Usage: ferociacalc <initial> <rate_pa> <term_in_months> <compounding_frequency_per_year>
+Where:
+<initial>
+	initial deposit in $ e.g. 1000 for $1000
+<rate_pa>
+	percentage p.a. e.g. 3.5 for 3.5%
+<term_in_months>
+	months for the deposit term e.g. 12 for 1 year
+<compounding_frequency_per_year>
+	one of [monthly, quarterly, annually, maturity]
+
+Exiting (check usage)
 ```
 
 Illustrative output:
 
 ```bash
-./bin/ferociacalc \
-  -d 10000 \
-  -i 1.1 \
-  -t 36 \
-  -p monthly
+$ ./bin/ferociacalc 1000 3.5 12 monthly
+Usage: ferociacalc <initial> <rate_pa> <term_in_months> <compounding_frequency_per_year>
+Where:
+<initial>
+	initial deposit in $ e.g. 1000 for $1000
+<rate_pa>
+	percentage p.a. e.g. 3.5 for 3.5%
+<term_in_months>
+	months for the deposit term e.g. 12 for 1 year
+<compounding_frequency_per_year>
+	one of [monthly, quarterly, annually, maturity]
 
-Final balance: $10,335
-Total interest earned: $335.00
+Given:
+Initial deposit =$1000.00;
+Interest rate =3.5% per annum;
+Deposit term =12 months;
+Frequency =monthly times per annum (at maturity, there are 0 times per annum).)
+
+    Final balance: $1036.00
+    Total interest earned:  $36.00
 ```
 
 #### Running tests
